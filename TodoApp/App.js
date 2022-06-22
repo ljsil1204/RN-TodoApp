@@ -15,6 +15,23 @@ function App() {
     {id: 3, text: '투두리스트 만들어보기', done: false},
   ]);
 
+  const onInsert = text => {
+    // 새로 등록할 항목의 id를 구함.
+    // 등록된 항목 중에서 가장 큰 id를 구하고, 그 값에 1을 더함.
+    // 만약 리스트가 비어있다면 1을 id로 사용합니다.
+    const nextId =
+      todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
+
+    // text : text => text 단축가능
+    const todo = {
+      id: nextId,
+      text,
+      done: false,
+    };
+
+    setTodos(todos.concat(todo));
+  };
+
   return (
     // SafeAreaProvider - root 에 한번 선언
     // SafeAreaView - 다른화면에서 한번씩 사용
@@ -25,6 +42,7 @@ function App() {
           style={styles.avoid}>
           <DateHead date={today} />
           {todos.length === 0 ? <Empty /> : <TodoList todos={todos} />}
+          <AddTodo onInsert={onInsert} />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>

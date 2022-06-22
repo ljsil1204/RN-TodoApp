@@ -4,8 +4,8 @@ import {View, Text, StyleSheet} from 'react-native';
 function TodoItem({id, text, done}) {
   return (
     <View style={styles.item}>
-      <View style={styles.circle} />
-      <Text style={styles.text}>{text}</Text>
+      <View style={[styles.circle, done && styles.filled]} />
+      <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
     </View>
   );
 }
@@ -28,6 +28,15 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#212121',
+  },
+  filled: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: '#26a69a',
+  },
+  lineThrough: {
+    color: '#9e9e9e',
+    textDecorationLine: 'line-through',
   },
 });
 
