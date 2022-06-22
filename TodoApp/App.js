@@ -39,6 +39,11 @@ function App() {
     setTodos(nextTodo);
   };
 
+  const onRemove = id => {
+    const nextTodos = todos.filter(todo => todo.id !== id);
+    setTodos(nextTodos);
+  };
+
   return (
     // SafeAreaProvider - root 에 한번 선언
     // SafeAreaView - 다른화면에서 한번씩 사용
@@ -51,7 +56,7 @@ function App() {
           {todos.length === 0 ? (
             <Empty />
           ) : (
-            <TodoList todos={todos} onToggle={onToggle} />
+            <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
           )}
           <AddTodo onInsert={onInsert} />
         </KeyboardAvoidingView>

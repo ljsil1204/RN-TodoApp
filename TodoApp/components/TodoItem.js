@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-function TodoItem({id, text, done, onToggle}) {
+function TodoItem({id, text, done, onToggle, onRemove}) {
   return (
     <View style={styles.item}>
       {/* onPress={() => onToggle(id)} : 함수를 변수나 상수에 담지 않고 바로 사용하는 함수 => 익명함수 */}
@@ -9,6 +10,13 @@ function TodoItem({id, text, done, onToggle}) {
         <View style={[styles.circle, done && styles.filled]} />
       </TouchableOpacity>
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+      {done ? (
+        <TouchableOpacity onPress={() => onRemove(id)}>
+          <MaterialIcons name="delete" size={32} color="red" />
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.removePlaceholder} />
+      )}
     </View>
   );
 }
@@ -40,6 +48,10 @@ const styles = StyleSheet.create({
   lineThrough: {
     color: '#9e9e9e',
     textDecorationLine: 'line-through',
+  },
+  removePlaceholder: {
+    width: 32,
+    height: 32,
   },
 });
 
