@@ -1,8 +1,34 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 function TodoItem({id, text, done, onToggle, onRemove}) {
+  const remove = () => {
+    Alert.alert(
+      '삭제', // 제목
+      '정말로 삭제?', // 내용
+      //버튼 배열
+      // style : cancel, destructive, default(파란색)  => ios 에서만 동작
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {
+          text: '삭제',
+          onPress: () => {
+            onRemove(id);
+          },
+          style: 'destructive',
+        },
+      ],
+      // 옵션 객체
+      // cancelable => 안드로이드 Alart 바깥영역 터치, 백버튼 터치 시 닫히도록 설정
+      // onDismiss => Alart 가 닫힐 때 호출되는 함수
+      {
+        cancelable: true,
+        onDismiss: () => {},
+      },
+    );
+  };
+
   return (
     <View style={styles.item}>
       {/* onPress={() => onToggle(id)} : 함수를 변수나 상수에 담지 않고 바로 사용하는 함수 => 익명함수 */}
@@ -11,7 +37,7 @@ function TodoItem({id, text, done, onToggle, onRemove}) {
       </TouchableOpacity>
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
       {done ? (
-        <TouchableOpacity onPress={() => onRemove(id)}>
+        <TouchableOpacity onPress={remove}>
           <MaterialIcons name="delete" size={32} color="red" />
         </TouchableOpacity>
       ) : (
