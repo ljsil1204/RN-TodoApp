@@ -32,6 +32,13 @@ function App() {
     setTodos(todos.concat(todo));
   };
 
+  const onToggle = id => {
+    const nextTodo = todos.map(todo =>
+      todo.id === id ? {...todo, done: !todo.done} : todo,
+    );
+    setTodos(nextTodo);
+  };
+
   return (
     // SafeAreaProvider - root 에 한번 선언
     // SafeAreaView - 다른화면에서 한번씩 사용
@@ -41,7 +48,11 @@ function App() {
           behavior={Platform.select({ios: 'padding', android: undefined})} //android - 설정하지 않아야 잘 작동 , ios - padding, height 설정
           style={styles.avoid}>
           <DateHead date={today} />
-          {todos.length === 0 ? <Empty /> : <TodoList todos={todos} />}
+          {todos.length === 0 ? (
+            <Empty />
+          ) : (
+            <TodoList todos={todos} onToggle={onToggle} />
+          )}
           <AddTodo onInsert={onInsert} />
         </KeyboardAvoidingView>
       </SafeAreaView>

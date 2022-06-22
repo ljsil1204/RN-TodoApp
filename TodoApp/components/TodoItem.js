@@ -1,10 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-function TodoItem({id, text, done}) {
+function TodoItem({id, text, done, onToggle}) {
   return (
     <View style={styles.item}>
-      <View style={[styles.circle, done && styles.filled]} />
+      {/* onPress={() => onToggle(id)} : 함수를 변수나 상수에 담지 않고 바로 사용하는 함수 => 익명함수 */}
+      <TouchableOpacity onPress={() => onToggle(id)}>
+        <View style={[styles.circle, done && styles.filled]} />
+      </TouchableOpacity>
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
     </View>
   );
